@@ -339,6 +339,130 @@
             color: white;
         }
 
+        /* MODAL SOLUZIONI */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: var(--color-bg);
+            border-radius: 12px;
+            padding: var(--space-2xl) var(--space-lg);
+            max-width: 900px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-2xl);
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--color-text);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--color-text-secondary);
+            font-size: 28px;
+            cursor: pointer;
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--color-accent);
+        }
+
+        .soluzioni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+
+        .soluzione-card {
+            background-color: var(--color-surface);
+            padding: var(--space-lg);
+            border-radius: 8px;
+            border: 1px solid var(--color-border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .soluzione-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(34, 197, 94, 0.15);
+        }
+
+        .soluzione-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-text);
+            margin-bottom: var(--space-md);
+        }
+
+        .soluzione-card .descrizione {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-md);
+            flex-grow: 1;
+        }
+
+        .soluzione-card .prezzo {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-accent);
+            margin-bottom: var(--space-lg);
+        }
+
+        .soluzione-card .accedi-btn {
+            display: inline-block;
+            background-color: var(--color-accent);
+            color: white;
+            padding: var(--space-sm) var(--space-lg);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            border: none;
+            cursor: pointer;
+        }
+
+        .soluzione-card .accedi-btn:hover {
+            background-color: var(--color-accent-hover);
+        }
+
         /* FOOTER */
         footer {
             background-color: var(--color-text);
@@ -411,7 +535,7 @@
     <header>
         <div class="header-content">
             <a href="#" class="logo">Ludovico</a>
-            <a href="https://wa.me/NUMBER" class="header-contact">💬 WhatsApp</a>
+            <a href="https://wa.me/+393508177524" class="header-contact">💬 WhatsApp</a>
         </div>
     </header>
 
@@ -533,7 +657,7 @@
                 </div>
             </div>
             <div style="text-align: center; margin-top: var(--space-xl);">
-                <a href="#cta-finale" class="cta-button">👉 Vedi le soluzioni disponibili</a>
+                <button class="cta-button" onclick="openSoluzioniModal()">👉 Vedi le soluzioni disponibili</button>
             </div>
         </div>
     </section>
@@ -544,11 +668,60 @@
             <h2>Hai un problema concreto che blocca incassi o produttività?</h2>
             <p>Non serve una riunione. Non serve teoria.<br>Serve risolvere il problema.</p>
             <div class="cta-group">
-                <a href="https://wa.me/NUMBER?text=Ho%20un%20problema%20che%20voglio%20risolvere" class="cta-button">👉 Scegli la soluzione giusta per te</a>
-                <a href="https://wa.me/NUMBER?text=Scrivimi%20il%20tuo%20problema%20specifico" class="cta-button-secondary">👉 Scrivimi il problema</a>
+                <button class="cta-button" onclick="openSoluzioniModal()">👉 Scegli la soluzione giusta per te</button>
+                <a href="https://wa.me/+393508177524?text=Scrivimi%20il%20tuo%20problema%20specifico" class="cta-button-secondary">👉 Scrivimi il problema</a>
             </div>
         </div>
     </section>
+
+    <!-- MODAL SOLUZIONI -->
+    <div id="soluzioniModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Le Soluzioni Disponibili</h2>
+                <button class="modal-close" onclick="closeSoluzioniModal()">✕</button>
+            </div>
+            <p style="color: var(--color-text-secondary); margin-bottom: var(--space-xl); font-size: 16px;">Scegli la soluzione che fa per te. Ogni kit è pronto all'uso.</p>
+            <div class="soluzioni-grid">
+                <div class="soluzione-card">
+                    <h4>📅 Sistema di Prenotazioni Automatizzato</h4>
+                    <p class="descrizione">Calendari sincronizzati, reminder automatici, riduzione no-show del 80%.</p>
+                    <p class="prezzo">€99/mese</p>
+                    <a href="https://TUOURL-INFOPRODOTTI.com/prenotazioni" class="accedi-btn">Accedi alla soluzione</a>
+                </div>
+                <div class="soluzione-card">
+                    <h4>🎯 Funnel di Chiusura Operativa</h4>
+                    <p class="descrizione">Sequenze di follow-up, sceneggiature di chiusura, aumento conversione da contatto a cliente.</p>
+                    <p class="prezzo">€149/mese</p>
+                    <a href="https://TUOURL-INFOPRODOTTI.com/chiusura" class="accedi-btn">Accedi alla soluzione</a>
+                </div>
+                <div class="soluzione-card">
+                    <h4>📊 Pipeline Dashboard Intelligente</h4>
+                    <p class="descrizione">Visibilità real-time di tutti gli stage, previsioni di fatturato, alert sui deal in pericolo.</p>
+                    <p class="prezzo">€199/mese</p>
+                    <a href="https://TUOURL-INFOPRODOTTI.com/pipeline" class="accedi-btn">Accedi alla soluzione</a>
+                </div>
+                <div class="soluzione-card">
+                    <h4>📋 Manuale Operativo Personalizzato</h4>
+                    <p class="descrizione">Documentazione completa, SOP standardizzate, checklist per ogni task.</p>
+                    <p class="prezzo">€79 (una tantum)</p>
+                    <a href="https://TUOURL-INFOPRODOTTI.com/manuale" class="accedi-btn">Accedi alla soluzione</a>
+                </div>
+                <div class="soluzione-card">
+                    <h4>👥 Organigramma & Responsabilità</h4>
+                    <p class="descrizione">Mapping chiaro dei ruoli, sistema di task assignment, accountability per ogni funzione.</p>
+                    <p class="prezzo">€129 (una tantum)</p>
+                    <a href="https://TUOURL-INFOPRODOTTI.com/organigramma" class="accedi-btn">Accedi alla soluzione</a>
+                </div>
+                <div class="soluzione-card">
+                    <h4>🔧 Consulenza Operativa Custom</h4>
+                    <p class="descrizione">Analisi custom del tuo problema specifico + soluzione su misura.</p>
+                    <p class="prezzo">Su misura</p>
+                    <a href="https://wa.me/+393508177524?text=Voglio%20una%20consulenza%20operativa%20personalizzata" class="accedi-btn">Contattami</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- FOOTER -->
     <footer>
@@ -558,7 +731,7 @@
             <div class="footer-contact">
                 <a href="https://wa.me/+393508177524">💬 WhatsApp</a>
                 <span>•</span>
-                <a href="mailto:allegaludovico@gmail.com">📧 Email</a>
+                <a href="mailto:ALLEGALUDOVICO@GMAIL.COM">📧 Email</a>
             </div>
         </div>
     </footer>
@@ -580,6 +753,31 @@
             btn.addEventListener('click', function() {
                 console.log('CTA clicked:', this.textContent);
             });
+        });
+
+        // Modal Soluzioni Functions
+        function openSoluzioniModal() {
+            document.getElementById('soluzioniModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSoluzioniModal() {
+            document.getElementById('soluzioniModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Chiudi modal cliccando su background
+        document.getElementById('soluzioniModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeSoluzioniModal();
+            }
+        });
+
+        // Chiudi modal con ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeSoluzioniModal();
+            }
         });
     </script>
 </body>
